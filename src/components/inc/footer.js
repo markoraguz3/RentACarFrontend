@@ -15,8 +15,6 @@ function Footer() {
                         <h6>Linkovi</h6>
                         <hr />
                         <div><Link to ="/">Početna</Link></div>
-                        <div><Link to ="/about">Ponuda vozila</Link></div>
-                        <div><Link to ="/contact">Kontakt</Link></div>
                         <div><Link to ="/signup">Registriraj se</Link></div>
                     </div>
                     <div className = "col-md-4">

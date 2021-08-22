@@ -17,12 +17,6 @@ function Navbar() {
                     <Link to="/" class = "nav-link active">Početna</Link>
                     </li>
                     <li class="nav-item">
-                        <Link to="/about" class = "nav-link active">Ponuda Vozila</Link>
-                    </li>
-                    <li class="nav-item">
-                        <Link to="/contact" class = "nav-link active">Kontakt</Link>
-                    </li>
-                    <li class="nav-item">
                         <Link to="/signup" class = "nav-link active">Registriraj se</Link>
                     </li>
                     </ul>
