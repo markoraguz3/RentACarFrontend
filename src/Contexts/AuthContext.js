@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import { createContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -22,17 +21,17 @@ const AuthContextProvider = (props) => {
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("roleId", roleId);
-      setIsLogged(true);
       setState({ ...state, token, userId, roleId });
+      setIsLogged(true);
    };
 
    const logout = () => {
-      localStorage.setItem("token", null);
+      localStorage.removeItem("token");
       localStorage.setItem("userId", null);
       localStorage.setItem("roleId", null);
-      setIsLogged(false);
       setState({ ...state, token: null, userId: null, roleId: null });
       history.push("/");
+      setIsLogged(false);
    };
 
    return (

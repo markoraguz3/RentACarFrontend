@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/inc/Navbar";
-import Home from "./components/pages/Home";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import Footer from "./components/inc/footer";
@@ -11,9 +10,10 @@ import AllCars from "./components/inc/AllCars";
 import AddNewCar from "./components/inc/AddNewCar";
 import Reservations from "./components/pages/Reservations";
 import Newreservation from "./components/inc/Newreservation";
-import Offer from "./components/pages/Offer";
+import Offer from "./components/pages/AllCars/Offer";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AuthContextProvider from "./Contexts/AuthContext";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
    return (
@@ -26,41 +26,28 @@ function App() {
                      <Login />
                   </Route>
 
-                  <Route exact path="/home">
-                     <Home />
-                  </Route>
-
                   <Route exact path="/signup">
                      <Signup />
                   </Route>
+                  <ProtectedRoute exact path="/offer" component={Offer} />
 
-                  <Route exact path="/car">
-                     <Car />
-                  </Route>
-
-                  <Route exact path="/prodavac">
-                     <Prodavac />
-                  </Route>
-
-                  <Route exact path="/AllCars">
-                     <AllCars />
-                  </Route>
-
-                  <Route exact path="/AddNewCar">
-                     <AddNewCar />
-                  </Route>
-
-                  <Route exact path="/reservations">
-                     <Reservations />
-                  </Route>
-
-                  <Route exact path="/newreservation">
-                     <Newreservation />
-                  </Route>
-
-                  <Route exact path="/offer">
-                     <Offer />
-                  </Route>
+                  <ProtectedRoute exact path="/car/:id" component={Car} />
+                  <ProtectedRoute exact path="/prodavac" component={Prodavac} />
+                  <ProtectedRoute
+                     exact
+                     path="/addnewcar"
+                     component={AddNewCar}
+                  />
+                  <ProtectedRoute
+                     exact
+                     path="/reservations"
+                     component={Reservations}
+                  />
+                  <ProtectedRoute
+                     exact
+                     path="/newreservation"
+                     component={Newreservation}
+                  />
                </Switch>
                <Footer />
             </AuthContextProvider>

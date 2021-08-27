@@ -1,9 +1,8 @@
 import React from "react";
-import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BrowserRouter as Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthContext";
 import { authServices } from "../../services/auth.services";
 
@@ -11,10 +10,6 @@ function Login() {
    const [error, setError] = useState("");
    const { login, isLogged } = useContext(AuthContext);
    const history = useHistory();
-
-   useEffect(() => {
-      if (isLogged) history.push("/offer");
-   }, []);
 
    const {
       register,
@@ -44,7 +39,9 @@ function Login() {
          .catch((err) => console.log(err));
    };
 
-   return (
+   return isLogged ? (
+      <Redirect to="/offer" />
+   ) : (
       <div class="content">
          <section className="section">
             <div className="container col-md-4">
@@ -84,11 +81,11 @@ function Login() {
                                  })}
                               />
                            </div>
-                           <div className="form-group py-2">
-                              <Link to="/signup">
-                                 Nemaš korisnički račun? Registriraj se.
-                              </Link>
-                           </div>
+
+                           <Link to="/signup" class="nav-link">
+                              Nemaš korisnički račun? Registriraj se.
+                           </Link>
+
                            {error && <p style={{ color: "red" }}>{error}</p>}
                            <div className="form-group py-3">
                               <input
