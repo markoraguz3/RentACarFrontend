@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 import { createContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -16,6 +18,10 @@ const AuthContextProvider = (props) => {
       userId: localStorage.getItem("userId"),
       roleId: localStorage.getItem("roleId"),
    });
+
+   useEffect(() => {
+      axios.defaults.headers.common["auth-token"] = state.token;
+   }, [isLogged]);
 
    const login = (token, userId, roleId) => {
       localStorage.setItem("token", token);
