@@ -4,9 +4,27 @@ import FormData from "form-data";
 
 export const carsServices = { getCars, createCar };
 
-async function getCars({ roleId, userId }) {
+async function getCars({
+   roleId,
+   userId,
+   brandId,
+   modelId,
+   bodyTypeId,
+   fuelTypeId,
+   pageIndex,
+}) {
    return axios
-      .get(`${apiURL}/cars`, { params: { roleId, userId } })
+      .get(`${apiURL}/cars`, {
+         params: {
+            roleId,
+            userId,
+            brandId,
+            modelId,
+            bodyTypeId,
+            fuelTypeId,
+            pageIndex,
+         },
+      })
       .then((res) => res)
       .catch((err) => err.response);
 }

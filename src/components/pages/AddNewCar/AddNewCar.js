@@ -12,7 +12,6 @@ import ImageInput from "./Inputs/ImageInput";
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../Contexts/AuthContext";
-import { useForm } from "react-hook-form";
 import { carsServices } from "../../../services/cars.services";
 
 function AddNewCar() {

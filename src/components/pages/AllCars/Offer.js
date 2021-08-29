@@ -29,7 +29,7 @@ function Offer() {
       priceTo: null,
       pageIndex: 0,
    });
-
+   const [maxPage, setMaxPage] = useState(0);
    const [cars, setCars] = useState([]);
 
    useEffect(() => {
@@ -38,10 +38,18 @@ function Offer() {
          .getCars({
             roleId: filters.roleId,
             userId: filters.userId,
+            brandId: filters.brandId,
+            modelId: filters.modelId,
+            bodyTypeId: filters.bodyTypeId,
+            fuelTypeId: filters.fuelTypeId,
+            priceFrom: filters.priceFrom,
+            priceTo: filters.priceTo,
+            pageIndex: filters.pageIndex,
          })
          .then((res) => {
             if (res.status === 200) {
-               setCars(res.data);
+               setCars(res.data.cars);
+               setMaxPage(Math.ceil(res.data.totalCount / 3));
             } else {
                console.log(res);
             }
@@ -120,11 +128,44 @@ function Offer() {
                <div class="col"></div>
                <div class="col">
                   <Pagination>
-                     <Pagination.Prev />
-                     <Pagination.Item>{1}</Pagination.Item>
-                     <Pagination.Item>{2}</Pagination.Item>
-                     <Pagination.Item>{3}</Pagination.Item>
-                     <Pagination.Next />
+                     {filters.pageIndex > 1 && (
+                        <Pagination.First
+                           onClick={() => {
+                              setFilters({
+                                 ...filters,
+                                 pageIndex: 0,
+                              });
+                           }}
+                        />
+                     )}
+                     {filters.pageIndex > 0 && (
+                        <Pagination.Item
+                           onClick={() => {
+                              setFilters({
+                                 ...filters,
+                                 pageIndex: filters.pageIndex - 1,
+                              });
+                           }}
+                        >
+                           {filters.pageIndex}
+                        </Pagination.Item>
+                     )}
+                     <Pagination.Item style={{ border: "3px solid green" }}>
+                        {filters.pageIndex + 1}
+                     </Pagination.Item>
+                     {maxPage > filters.pageIndex + 1 && (
+                        <Pagination.Item
+                           onClick={() => {
+                              setFilters({
+                                 ...filters,
+                                 pageIndex: filters.pageIndex + 1,
+                              });
+                           }}
+                        >
+                           {filters.pageIndex + 2}
+                        </Pagination.Item>
+                     )}
+                     {filters.pageIndex + 2 < maxPage && <Pagination.Last />}
                   </Pagination>
                </div>
                <div class="col"></div>
