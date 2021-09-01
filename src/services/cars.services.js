@@ -2,7 +2,7 @@ import { apiURL } from "../Config/URL";
 import axios from "axios";
 import FormData from "form-data";
 
-export const carsServices = { getCars, createCar };
+export const carsServices = { getCars, getSingleCar, createCar };
 
 async function getCars({
    roleId,
@@ -25,6 +25,13 @@ async function getCars({
             pageIndex,
          },
       })
+      .then((res) => res)
+      .catch((err) => err.response);
+}
+
+async function getSingleCar(carId) {
+   return axios
+      .get(`${apiURL}/cars/${carId}`)
       .then((res) => res)
       .catch((err) => err.response);
 }

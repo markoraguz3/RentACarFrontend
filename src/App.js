@@ -4,7 +4,7 @@ import Navbar from "./components/inc/Navbar";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import Footer from "./components/inc/footer";
-import Car from "./components/pages/Car";
+import Car from "./components/pages/SingleCar/Car";
 import Prodavac from "./components/pages/Prodavac";
 import AddNewCar from "./components/pages/AddNewCar/AddNewCar";
 import Reservations from "./components/pages/Reservations";

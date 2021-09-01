@@ -1,47 +1,45 @@
-@import url("https://cdn.syncfusion.com/ej2/material.css");
+@import url('https://cdn.syncfusion.com/ej2/material.css');
 
-
-.p{
-  font-size: 14px;
-  color: #262626;
+.p {
+	font-size: 14px;
+	color: #262626;
 }
-.section{
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.main-heading{
-  color: rgb(204,18,18);
-  font-size: 26px;
+.section {
+	padding-top: 40px;
+	padding-bottom: 40px;
 }
 
-.underline{
-  height: 0.4px;
-  width: 4rem;
-  background-color: #f76c2f;
-  margin-top: 10px;
-  margin-bottom: 10px; 
+.main-heading {
+	color: rgb(204, 18, 18);
+	font-size: 26px;
 }
 
-.bg-c-light{
-  background-color: #f2f2f2;
+.underline {
+	height: 0.4px;
+	width: 4rem;
+	background-color: #f76c2f;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
-.footer a{
-  color: #f2f2f2;
-  text-decoration: none !important;
-  min-height: 60px;
+.bg-c-light {
+	background-color: #f2f2f2;
 }
 
-.footer a:hover{
-  color: grey;
+.footer a {
+	color: #f2f2f2;
+	text-decoration: none !important;
+	min-height: 60px;
+}
+
+.footer a:hover {
+	color: grey;
 }
 
 .content {
-  min-height: calc(100vh - 60px);
+	min-height: calc(100vh - 60px);
 }
 
-.button-prodavac{
-  padding: 20px;
-
+.button-prodavac {
+	padding: 20px;
 }

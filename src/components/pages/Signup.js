@@ -1,6 +1,5 @@
 import React from 'react';
-import {TextField, Button, Divider} from '@material-ui/core';
-import {BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Signup() {
     return(
