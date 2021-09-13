@@ -1,92 +1,82 @@
-import react from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+/** @format */
+
+import { useContext, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import { Roles } from '../../Config/Roles';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { reservationsServices } from '../../services/reservation.services';
 
 function Reservations() {
-   return (
-      <div class=" content">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm">
-                  <div class="button-prodavac">
-                     <a
-                        href="/prodavac"
-                        class="btn btn-primary btn-md"
-                        role="button"
-                     >
-                        Nazad
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <a
-               href="/newreservation"
-               class="btn btn-primary btn-md"
-               role="button"
-            >
-               Dodaj Novu Rezervaciju
-            </a>
-            <table class="table">
-               <thead>
-                  <tr>
-                     <th scope="col">#</th>
-                     <th scope="col">Datum od</th>
-                     <th scope="col">Datum do</th>
-                     <th scope="col">Automobil</th>
-                     <th scope="col">Korisnik</th>
-                     <th scope="col">Cijena</th>
+	const [reservations, setReservations] = useState([]);
+	const [update, setUpdate] = useState(new Date());
+	var user = JSON.parse(localStorage.getItem('userObj'));
 
-                     <hr />
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <th scope="row">1</th>
-                     <td>1.1.2020</td>
-                     <td>4.2.2020</td>
-                     <td>Audi A4</td>
-                     <td>Marko</td>
-                     <td>300</td>
-                     <th scope="col">
-                        <Button variant="success">Potvrdi</Button>
-                     </th>
-                     <th scope="col">
-                        <Button variant="outline-danger">Izbriši</Button>
-                     </th>
-                  </tr>
-                  <tr>
-                     <th scope="row">2</th>
-                     <td>1.1.2020</td>
-                     <td>4.2.2020</td>
-                     <td>Audi A4</td>
-                     <td>Marko</td>
-                     <td>300</td>
-                     <th scope="col">
-                        <Button variant="success">Potvrdi</Button>
-                     </th>
-                     <th scope="col">
-                        <Button variant="outline-danger">Izbriši</Button>
-                     </th>
-                  </tr>
-                  <tr>
-                     <th scope="row">3</th>
-                     <td>1.1.2020</td>
-                     <td>4.2.2020</td>
-                     <td>Audi A4</td>
-                     <td>Marko</td>
-                     <td>300</td>
-                     <th scope="col">
-                        <Button variant="success">Potvrdi</Button>
-                     </th>
-                     <th scope="col">
-                        <Button variant="outline-danger">Izbriši</Button>
-                     </th>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-      </div>
-   );
+	useEffect(() => {
+		reservationsServices
+			.getReservations()
+			.then(res => setReservations(res.data))
+			.catch(err => console.log(err));
+	}, [update]);
+
+	const changeReservationStatus = (id, status) => {
+		reservationsServices
+			.updateReservation(id, status)
+			.then(res => console.log(res))
+			.catch(err => console.log(err));
+		setUpdate(new Date());
+	};
+	return (
+		<div class=' content'>
+			<div class='container'>
+				<table class='table mt-5'>
+					<thead>
+						<tr>
+							<th scope='col'>Datum od</th>
+							<th scope='col'>Datum do</th>
+							<th scope='col'>Automobil</th>
+							<th scope='col'>Cijena/Dan</th>
+							<th scope='col'>Korisnik</th>
+							<th scope='col'>Status</th>
+							<hr />
+						</tr>
+					</thead>
+					<tbody>
+						{reservations.length > 0
+							? reservations.map(x => (
+									<tr>
+										<td>{x.dateFrom.slice(0, 10)}</td>
+										<td>{x.dateTo.slice(0, 10)}</td>
+										<td>{x.carBrand + ' ' + x.carModel}</td>
+										<td>{x.price}</td>
+										{Roles.Kupac == user.roleId && <td>{x.ownerName}</td>}
+										{Roles.Prodavac == user.roleId && <td>{x.userName}</td>}
+										<td>{x.reservationStatus}</td>
+										{Roles.Prodavac == user.roleId && (
+											<td>
+												<Button
+													variant='success mx-2'
+													onClick={() =>
+														changeReservationStatus(x._id, 'Potvrđeno')
+													}>
+													Potvrdi
+												</Button>
+												<Button
+													variant='outline-danger'
+													onClick={() =>
+														changeReservationStatus(x._id, 'Odbijeno')
+													}>
+													Odbij
+												</Button>
+											</td>
+										)}
+									</tr>
+							  ))
+							: 'Nema rezervacija'}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	);
 }
 
 export default Reservations;

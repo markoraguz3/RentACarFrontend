@@ -5,8 +5,10 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { reservationsServices } from '../../../services/reservation.services';
 import { AuthContext } from '../../../Contexts/AuthContext';
-const Reservation = ({ carId }) => {
+const Reservation = ({ carId, carData }) => {
 	const { userId } = useContext(AuthContext);
+	var user = JSON.parse(localStorage.getItem('userObj'));
+
 	const {
 		register,
 		handleSubmit,
@@ -14,7 +16,7 @@ const Reservation = ({ carId }) => {
 	} = useForm();
 
 	const [error, setError] = useState();
-
+	console.log(carData);
 	const onSubmit = data => {
 		if (data.dateFrom < data.dateTo) {
 			reservationsServices
@@ -23,7 +25,13 @@ const Reservation = ({ carId }) => {
 					dateTo: data.dateTo,
 					reservationStatus: 'Na čekanju',
 					userId: userId,
+					userName: user.firstName + ' ' + user.lastName,
 					carId: carId,
+					carBrand: carData.brandName,
+					carModel: carData.modelName,
+					ownerId: carData.userId,
+					ownerName: carData.userName,
+					price: carData.priceDay,
 				})
 				.then(res => console.log(res))
 				.catch(err => console.log('err', err));

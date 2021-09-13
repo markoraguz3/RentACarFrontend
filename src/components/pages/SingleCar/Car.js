@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import slika1 from '../../images/slika2.PNG';
 import { carsServices } from '../../../services/cars.services';
 import { useParams } from 'react-router-dom';
 import Reservation from './Reservation';
@@ -87,7 +86,7 @@ function Car() {
 					</div>
 				</div>
 			</section>
-			<Reservation carId={carData._id} />
+			<Reservation carId={carData._id} carData={carData} />
 			<Comments />
 		</div>
 	);
