@@ -27,9 +27,9 @@ function Offer() {
 		modelId: null,
 		bodyTypeId: null,
 		fuelTypeId: null,
-		priceFrom: null,
-		priceTo: null,
-		pageIndex: 0,
+		priceFrom: 0,
+		priceTo: 10000000000,
+		pageIndex: null,
 	});
 	const [maxPage, setMaxPage] = useState(0);
 	const [cars, setCars] = useState([]);
@@ -90,10 +90,13 @@ function Offer() {
 						</div>
 					) : (
 						<div className='row'>
-							{cars.map(car => (
+							{cars?.map(car => (
 								<div className='col-md-4 text-center my-2'>
-									<Link to={'/car/' + car._id}>
+									<Link
+										to={'/car/' + car._id}
+										style={{ textDecoration: 'none' }}>
 										<div className='card shadow'>
+											{' '}
 											<img
 												src={'http://localhost:3500/uploads/' + car.images}
 												className='w-100 border-bottom'
@@ -101,8 +104,9 @@ function Offer() {
 												height={200}
 											/>
 											<div className='card-body'>
-												<h6>Rent a car</h6>
-												<p>Audi A4 2.0TDI</p>
+												<h5>{car.brandName + ' ' + car.modelName}</h5>
+												<h5>{car.priceDay + ' KM'}</h5>
+												<p>{car.bodyTypeName + ' ' + car.fuelTypeName}</p>
 											</div>
 										</div>
 									</Link>
@@ -139,7 +143,7 @@ function Offer() {
 									{filters.pageIndex}
 								</Pagination.Item>
 							)}
-							<Pagination.Item style={{ border: '3px solid green' }}>
+							<Pagination.Item className='pagination-active'>
 								{filters.pageIndex + 1}
 							</Pagination.Item>
 							{maxPage > filters.pageIndex + 1 && (
@@ -153,7 +157,16 @@ function Offer() {
 									{filters.pageIndex + 2}
 								</Pagination.Item>
 							)}
-							{filters.pageIndex + 2 < maxPage && <Pagination.Last />}
+							{filters.pageIndex + 2 < maxPage && (
+								<Pagination.Last
+									onClick={() => {
+										setFilters({
+											...filters,
+											pageIndex: maxPage - 1,
+										});
+									}}
+								/>
+							)}
 						</Pagination>
 					</div>
 					<div class='col'></div>
