@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { reservationsServices } from '../../../services/reservation.services';
 import { AuthContext } from '../../../Contexts/AuthContext';
+import { useEffect } from 'react';
 const Reservation = ({ carId, carData }) => {
 	const { userId } = useContext(AuthContext);
 	var user = JSON.parse(localStorage.getItem('userObj'));
@@ -16,7 +17,9 @@ const Reservation = ({ carId, carData }) => {
 	} = useForm();
 
 	const [error, setError] = useState();
-	console.log(carData);
+	const [successMsg, setSuccessMsg] = useState();
+	const [update, setUpdate] = useState();
+
 	const onSubmit = data => {
 		if (data.dateFrom < data.dateTo) {
 			reservationsServices
@@ -33,12 +36,28 @@ const Reservation = ({ carId, carData }) => {
 					ownerName: carData.userName,
 					price: carData.priceDay,
 				})
-				.then(res => console.log(res))
+				.then(res => {
+					console.log(res);
+					if (res.status === 200) {
+						setSuccessMsg('Zahtjev za rezervacijom poslan');
+					} else {
+						setError('Nešto je pošlo po zlu');
+					}
+				})
 				.catch(err => console.log('err', err));
 		} else {
 			setError('Datum preuzimanja mora biti manji od datuma vraćanja.');
 		}
+		setUpdate(new Date());
 	};
+
+	useEffect(() => {
+		setTimeout(function () {
+			setError();
+			setSuccessMsg();
+		}, 3000);
+	}, [update]);
+
 	return (
 		<section className='section'>
 			<div className='container'>
@@ -71,6 +90,7 @@ const Reservation = ({ carId, carData }) => {
 									</div>
 								</div>
 								<p style={{ color: 'red' }}>{error}</p>
+								<p style={{ color: 'green' }}>{successMsg}</p>
 							</div>
 							<div className='form-group py-3'>
 								<input type='submit' className='btn btn-primary shadow w-100' />

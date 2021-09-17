@@ -12,13 +12,16 @@ const Comments = () => {
 	const [commentsData, setCommentsData] = useState([]);
 	const [commentText, setCommentText] = useState();
 	const [errorText, setErrorText] = useState();
+	const [update, setUpdate] = useState();
+	const user = JSON.parse(localStorage.getItem('userObj'));
 
+	console.log(user);
 	useEffect(() => {
 		commentServices
 			.getComments(id)
 			.then(res => setCommentsData(res.data))
 			.catch(err => console.log(err));
-	}, []);
+	}, [update]);
 
 	return (
 		<section>
@@ -58,12 +61,13 @@ const Comments = () => {
 												commentServices
 													.createComment({
 														text: commentText,
-														userName: 'UserName',
+														userName: user.firstName + ' ' + user.lastName,
 														userId: userId,
 														carId: id,
 													})
 													.then(res => console.log(res))
 													.catch(err => console.log(err.response));
+												setUpdate(new Date());
 											}
 										}}
 									/>
