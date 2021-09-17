@@ -5,10 +5,14 @@ import { carsServices } from '../../../services/cars.services';
 import { useParams } from 'react-router-dom';
 import Reservation from './Reservation';
 import Comments from './Comments';
+import { Roles } from '../../../Config/Roles';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Contexts/AuthContext';
 
 function Car() {
 	const { id } = useParams();
 	const [carData, setCarData] = useState({});
+	const { roleId } = useContext(AuthContext);
 
 	useEffect(() => {
 		carsServices
@@ -86,7 +90,9 @@ function Car() {
 					</div>
 				</div>
 			</section>
-			<Reservation carId={carData._id} carData={carData} />
+			{Roles.Kupac === roleId && (
+				<Reservation carId={carData._id} carData={carData} />
+			)}
 			<Comments />
 		</div>
 	);

@@ -10,7 +10,6 @@ function Reservations() {
 	const [reservations, setReservations] = useState([]);
 	const [update, setUpdate] = useState(new Date());
 	var user = JSON.parse(localStorage.getItem('userObj'));
-
 	useEffect(() => {
 		reservationsServices
 			.getReservations()
@@ -42,35 +41,47 @@ function Reservations() {
 					</thead>
 					<tbody>
 						{reservations.length > 0
-							? reservations.map(x => (
-									<tr>
-										<td>{x.dateFrom.slice(0, 10)}</td>
-										<td>{x.dateTo.slice(0, 10)}</td>
-										<td>{x.carBrand + ' ' + x.carModel}</td>
-										<td>{x.price}</td>
-										{Roles.Kupac == user.roleId && <td>{x.ownerName}</td>}
-										{Roles.Prodavac == user.roleId && <td>{x.userName}</td>}
-										<td>{x.reservationStatus}</td>
-										{Roles.Prodavac == user.roleId && (
-											<td>
-												<Button
-													variant='success mx-2'
-													onClick={() =>
-														changeReservationStatus(x._id, 'Potvrđeno')
-													}>
-													Potvrdi
-												</Button>
-												<Button
-													variant='outline-danger'
-													onClick={() =>
-														changeReservationStatus(x._id, 'Odbijeno')
-													}>
-													Odbij
-												</Button>
+							? reservations.map(x => {
+									let textColor = 'black';
+									if (x.reservationStatus === 'Na čekanju') {
+										textColor = 'orange';
+									} else if (x.reservationStatus === 'Potvrđeno') {
+										textColor = 'green';
+									} else {
+										textColor = 'red';
+									}
+									return (
+										<tr>
+											<td>{x.dateFrom.slice(0, 10)}</td>
+											<td>{x.dateTo.slice(0, 10)}</td>
+											<td>{x.carBrand + ' ' + x.carModel}</td>
+											<td>{x.price}</td>
+											{Roles.Kupac == user.roleId && <td>{x.ownerName}</td>}
+											{Roles.Prodavac == user.roleId && <td>{x.userName}</td>}
+											<td style={{ color: textColor }}>
+												{x.reservationStatus}
 											</td>
-										)}
-									</tr>
-							  ))
+											{Roles.Prodavac == user.roleId && (
+												<td>
+													<Button
+														variant='success mx-2'
+														onClick={() =>
+															changeReservationStatus(x._id, 'Potvrđeno')
+														}>
+														Potvrdi
+													</Button>
+													<Button
+														variant='outline-danger'
+														onClick={() =>
+															changeReservationStatus(x._id, 'Odbijeno')
+														}>
+														Odbij
+													</Button>
+												</td>
+											)}
+										</tr>
+									);
+							  })
 							: 'Nema rezervacija'}
 					</tbody>
 				</table>
