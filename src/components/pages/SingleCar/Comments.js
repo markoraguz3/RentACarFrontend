@@ -37,7 +37,7 @@ const Comments = () => {
 					</div>
 				</div>
 				<div class='col-sm-12'>
-					{Roles.Kupac === roleId && (
+					{Roles.Kupac == roleId && (
 						<div class='card'>
 							<div class='card-body'>
 								<h5 class='card-title'>Napiši Komentar</h5>

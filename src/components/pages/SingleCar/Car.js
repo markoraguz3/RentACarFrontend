@@ -90,7 +90,7 @@ function Car() {
 					</div>
 				</div>
 			</section>
-			{Roles.Kupac === roleId && (
+			{Roles.Kupac == roleId && (
 				<Reservation carId={carData._id} carData={carData} />
 			)}
 			<Comments />

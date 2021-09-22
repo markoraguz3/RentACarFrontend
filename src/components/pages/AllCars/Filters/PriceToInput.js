@@ -2,7 +2,7 @@
 
 const PriceToInput = ({ filters, setFilters }) => {
 	return (
-		<div className='col'>
+		<div className='col-lg-2 col-md-4 col-sm-12'>
 			<label>Cijena do</label>
 			<div className='input-group'>
 				<input
