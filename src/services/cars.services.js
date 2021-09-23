@@ -4,7 +4,7 @@ import { apiURL } from '../Config/URL';
 import axios from 'axios';
 import FormData from 'form-data';
 
-export const carsServices = { getCars, getSingleCar, createCar };
+export const carsServices = { getCars, getSingleCar, createCar, deleteCar };
 
 async function getCars({
 	roleId,
@@ -81,6 +81,13 @@ async function createCar({
 
 	return axios
 		.post(`${apiURL}/cars`, formData)
+		.then(res => res)
+		.catch(err => err.response);
+}
+
+async function deleteCar(id) {
+	return axios
+		.delete(`${apiURL}/cars/${id}`)
 		.then(res => res)
 		.catch(err => err.response);
 }

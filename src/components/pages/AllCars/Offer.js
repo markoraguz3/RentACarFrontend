@@ -15,6 +15,7 @@ import BodyTypeInput from './Filters/BodyTypeInput';
 import FuelTypeInput from './Filters/FuelTypeInput';
 import PriceFromInput from './Filters/PriceFromInput';
 import PriceToInput from './Filters/PriceToInput';
+import ConfirmModal from '../../common/ConfirmModal';
 
 function Offer() {
 	const { userId, roleId } = useContext(AuthContext);
@@ -33,6 +34,8 @@ function Offer() {
 	});
 	const [maxPage, setMaxPage] = useState(0);
 	const [cars, setCars] = useState([]);
+	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+	const [currentCar, setCurrentCar] = useState({});
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -107,6 +110,24 @@ function Offer() {
 												<h5>{car.brandName + ' ' + car.modelName}</h5>
 												<h5>{car.priceDay + ' KM'}</h5>
 												<p>{car.bodyTypeName + ' ' + car.fuelTypeName}</p>
+												{roleId == Roles.Prodavac && (
+													<>
+														<div>
+															{/* <Link to={'/updatecar/' + car._id}>
+																<Button className='btn-success'>Uredi</Button>
+															</Link> */}
+															<Button
+																className='btn-danger mx-3'
+																onClick={e => {
+																	e.preventDefault();
+																	setShowConfirmDelete(true);
+																	setCurrentCar(car);
+																}}>
+																Izbriši
+															</Button>
+														</div>
+													</>
+												)}
 											</div>
 										</div>
 									</Link>
@@ -116,7 +137,23 @@ function Offer() {
 					)}
 				</div>
 			</section>
-
+			<ConfirmModal
+				show={showConfirmDelete}
+				msg={'Sigurno želite obrisati auto?'}
+				handleClose={() => {
+					setShowConfirmDelete(false);
+				}}
+				handleAction={e => {
+					setShowConfirmDelete(false);
+					carsServices
+						.deleteCar(currentCar._id)
+						.then(res => {
+							console.log(res);
+							setUpdate(new Date());
+						})
+						.catch(err => console.log(err));
+				}}
+			/>
 			<div class='container'>
 				<div class='row'>
 					<div class='col'></div>

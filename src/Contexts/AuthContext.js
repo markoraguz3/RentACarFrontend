@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { createContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Roles } from '../Config/Roles';
 
 export const AuthContext = createContext();
 
@@ -41,7 +42,9 @@ const AuthContextProvider = props => {
 		history.push('/');
 		setIsLogged(false);
 	};
-
+	if (state.roleId == Roles.Admin) {
+		history.push('/adminpage');
+	}
 	return (
 		<AuthContext.Provider value={{ ...state, logout, login, isLogged }}>
 			{props.children}

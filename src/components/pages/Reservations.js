@@ -61,24 +61,25 @@ function Reservations() {
 											<td style={{ color: textColor }}>
 												{x.reservationStatus}
 											</td>
-											{Roles.Prodavac == user.roleId && (
-												<td>
-													<Button
-														variant='success mx-2'
-														onClick={() =>
-															changeReservationStatus(x._id, 'Potvrđeno')
-														}>
-														Potvrdi
-													</Button>
-													<Button
-														variant='outline-danger'
-														onClick={() =>
-															changeReservationStatus(x._id, 'Odbijeno')
-														}>
-														Odbij
-													</Button>
-												</td>
-											)}
+											{Roles.Prodavac == user.roleId &&
+												x.reservationStatus == 'Na čekanju' && (
+													<td>
+														<Button
+															variant='success mx-2'
+															onClick={() =>
+																changeReservationStatus(x._id, 'Potvrđeno')
+															}>
+															Potvrdi
+														</Button>
+														<Button
+															variant='outline-danger'
+															onClick={() =>
+																changeReservationStatus(x._id, 'Odbijeno')
+															}>
+															Odbij
+														</Button>
+													</td>
+												)}
 										</tr>
 									);
 							  })

@@ -46,7 +46,7 @@ function App() {
 							path='/newreservation'
 							component={Newreservation}
 						/>
-						<ProtectedRoute exact path='/adminpage' component={AdminPage} />
+						<Route exact path='/adminpage' component={AdminPage} />
 					</Switch>
 					<Footer />
 				</AuthContextProvider>

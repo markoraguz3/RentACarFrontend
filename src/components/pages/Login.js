@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BrowserRouter as Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { authServices } from '../../services/auth.services';
 
