@@ -37,6 +37,7 @@ function Signup() {
 
 					history.push('/');
 				} else {
+					console.log(res);
 					setError(res.data);
 				}
 			})
@@ -157,6 +158,7 @@ function Signup() {
 													</label>
 												</div>
 											</div>
+											<p style={{ color: 'red' }}>{error}</p>
 										</div>
 										<div className='form-group py-2'>
 											<Link to='/'>Već imaš korisnički račun? Prijavi se.</Link>

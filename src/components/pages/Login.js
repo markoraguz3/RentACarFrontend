@@ -65,11 +65,9 @@ function Login() {
 											placeholder='Unesi Email'
 											{...register('email', {
 												required: true,
-												minLength: 7,
-												maxLength: 20,
 											})}
 										/>
-										{errors?.email && 'Last name is required'}
+										{errors?.email && 'Ovo polje je obavecno'}
 									</div>
 									<div className='form-group'>
 										<label className='mb-1'>Lozinka</label>
