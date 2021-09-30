@@ -10,9 +10,15 @@ function Reservations() {
 	const [reservations, setReservations] = useState([]);
 	const [update, setUpdate] = useState(new Date());
 	var user = JSON.parse(localStorage.getItem('userObj'));
+
+	console.log(user);
 	useEffect(() => {
 		reservationsServices
-			.getReservations()
+			.getReservations({
+				roleId: user.roleId,
+				ownerId: user._id,
+				userId: user._id,
+			})
 			.then(res => setReservations(res.data))
 			.catch(err => console.log(err));
 	}, [update]);

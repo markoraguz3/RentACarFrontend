@@ -9,9 +9,15 @@ export const reservationsServices = {
 	updateReservation,
 };
 
-async function getReservations() {
+async function getReservations({ roleId, userId, ownerId }) {
 	return axios
-		.get(`${apiURL}/reservations`)
+		.get(`${apiURL}/reservations`, {
+			params: {
+				roleId,
+				userId,
+				ownerId,
+			},
+		})
 		.then(res => res)
 		.catch(err => err.response);
 }
