@@ -39,7 +39,11 @@ const Reservation = ({ carId, carData }) => {
 				.then(res => {
 					console.log(res);
 					if (res.status === 200) {
-						setSuccessMsg('Zahtjev za rezervacijom poslan');
+						if (res.data.error) {
+							setError(res.data.error);
+						} else {
+							setSuccessMsg('Zahtjev za rezervacijom poslan');
+						}
 					} else {
 						setError('Nešto je pošlo po zlu');
 					}

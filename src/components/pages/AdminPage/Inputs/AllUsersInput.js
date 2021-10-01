@@ -23,8 +23,9 @@ const AllUsersInput = () => {
 			.then(res => {
 				console.log(res);
 				if (res.status === 200) {
+					const newData = res.data.filter(x => x.roleId != 3);
 					setOptions(
-						res.data.map(x => {
+						newData.map(x => {
 							return {
 								value: x._id,
 								label: x.firstName + ' ' + x.lastName + ' - ' + x.email,
@@ -55,7 +56,6 @@ const AllUsersInput = () => {
 
 	return (
 		<div className='col-lg-3 col-md-6 col-sm-12'>
-			<label className='my-2'>Marka auta</label>
 			<Select
 				options={options}
 				isClearable

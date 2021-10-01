@@ -19,7 +19,9 @@ function Reservations() {
 				ownerId: user._id,
 				userId: user._id,
 			})
-			.then(res => setReservations(res.data))
+			.then(res => {
+				setReservations(res.data);
+			})
 			.catch(err => console.log(err));
 	}, [update]);
 
